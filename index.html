@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+
+<!-- define angular app -->
+<html ng-app="testApp">
+
+<head>
+   <base href="/">
+  <!-- SCROLLS -->
+  <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.css" />
+
+  <!-- SPELLS -->
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular-route.js"></script>
+  <script>
+
+    var testApp = angular.module('testApp', ['ngRoute']);
+
+// configure our routes
+testApp.config(function($routeProvider, $locationProvider) {
+  $routeProvider
+
+    // route for the home page
+    .when('/', {
+      templateUrl : 'home.html',
+      controller  : 'MainCtrl'
+    })
+    // route for the products page
+    .when('/products', {
+      templateUrl : 'products.html',
+      controller  : 'ProductsCtrl'
+    })
+    .otherwise({
+      redirectTo: '/'
+    });
+    $locationProvider.html5Mode(true);
+});
+
+// create the controller and inject Angular's $scope
+testApp.controller('MainCtrl', function($scope) {
+  // create a message to display in our view
+  $scope.message = 'Everyone come and see how good I look!';
+});
+
+testApp.controller('ProductsCtrl', function($scope) {
+  $scope.message = "Yay producst page";
+  $scope.products = [
+    {name: "Product1" ,price: 100},
+    {name: "Product2" ,price: 200},
+    {name: "Product3" ,price: 300},
+    {name: "Product4" ,price: 400},
+  ];
+});
+</script>
+
+</head>
+
+<!-- define angular controller -->
+<body ng-controller="ProductsCtrl">
+
+  <nav class="navbar navbar-default">
+    <div class="container">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="/">SEO Example</a>
+      </div>
+
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="/"><i class="fa fa-home"></i> Home</a></li>
+        <li><a href="products"><i class="fa fa-shield"></i> Products</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div id="main">
+
+    <!-- angular templating -->
+		<!-- this is where content will be injected -->
+    <div ng-view></div>
+
+  </div>
+
+  <footer class="text-center">
+  </footer>
+
+</body>
+
+</html>
